@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
+ 
+ 	<!-- first setup, drools, services, persistence layer, domain beans -->
+ 	<import resource="classpath:beans.xml" />
+
+ 	<!-- RESTEasy Spring integration requires REST beans to be wired in this file.-->
+	<bean id="memberREST" class="com.aimia.endeavour.member.MemberREST">
+		<property name="memberService" ref="memberService1" />
+	</bean>
+ 
+</beans>
