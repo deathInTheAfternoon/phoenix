@@ -1,0 +1,2 @@
+#ignore maven target directory and subdirectories
+*/target/*
