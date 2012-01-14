@@ -19,15 +19,6 @@ public interface MemberValidationService {
    * validates provided customer and returns validation report
    */
   public ValidationReport validate(Member member);
-
   public void setKnowledgeAgent(KnowledgeAgent kAgent);
-
-  public void setJbpmSession(StatefulKnowledgeSession jbpmSession);
-  public void startBusinessProcess();
-  
-  /*public void setBankingInquiryService(
-      BankingInquiryService bankingInquiryService) {
-    this.bankingInquiryService = bankingInquiryService;
-  }*/
   
 }

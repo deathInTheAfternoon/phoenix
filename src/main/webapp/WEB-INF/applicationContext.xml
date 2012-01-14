@@ -9,6 +9,7 @@
  	<!-- RESTEasy Spring integration requires REST beans to be wired in this file.-->
 	<bean id="memberREST" class="com.aimia.endeavour.member.MemberREST">
 		<property name="memberService" ref="memberService1" />
+		<property name="memberBpmService" ref="memberBpmService1" />
 	</bean>
  
 </beans>

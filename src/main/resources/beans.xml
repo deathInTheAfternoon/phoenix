@@ -22,8 +22,8 @@
     <drools:resource-change-scanner id="scanInterval" interval="60" />
     <drools:kbase id="kbase" node="node1">
         <drools:resources>
-            <drools:resource  type="DRL" source="classpath:rules/MemberRules.drl"/>
-            <drools:resource type="BPMN2" source="classpath:bpm/TestFlow.bpmn2"/>
+            <drools:resource  type="DRL" source="classpath:rules/memberRules.drl"/>
+            <drools:resource type="BPMN2" source="classpath:bpm/memberFlows.bpmn2"/>
         </drools:resources>
         <drools:configuration>
             <drools:mbeans enabled="true" />
@@ -37,12 +37,17 @@
     </drools:kagent>
     <drools:ksession id="jbpmSession" type="stateful" kbase="kbase" />
 
+    <!-- BPM services provided by JBPM. -->
+    <bean id="memberBpmService1" class="com.aimia.endeavour.bpm.MemberBpmServiceImpl">
+        <property name="jbpmSession" ref="jbpmSession"/>
+    </bean>
+
     <bean id="reportFactory1" class="com.aimia.endeavour.validation.DefaultReportFactory">
     </bean>
 
+    <!-- Validation services provided by Drools Expert. -->
     <bean id="memberValidationService1" class="com.aimia.endeavour.validation.MemberValidationServiceImpl">
         <property name="knowledgeAgent" ref="kagent1" />
-        <property name="jbpmSession" ref="jbpmSession"/>
         <property name="reportFactory" ref="reportFactory1" />
     </bean>
 

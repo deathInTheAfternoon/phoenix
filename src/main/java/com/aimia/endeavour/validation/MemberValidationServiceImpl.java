@@ -64,18 +64,4 @@ public class MemberValidationServiceImpl implements  MemberValidationService {
       BankingInquiryService bankingInquiryService) {
     this.bankingInquiryService = bankingInquiryService;
   }*/
-
-  //TODO: putting this here means either renaming this class or eventually moving bpmn somewhere else.
-  public void setJbpmSession(StatefulKnowledgeSession jbpmSession)
-  {
-    this.jbpmSession = jbpmSession;
-  }
-  public void startBusinessProcess()
-  {
-    logger.debug("WITHIN START BPXXXXXXX");
-    Map<String, Object> jbpmVariables = new HashMap<String, Object>();
-    jbpmVariables.put("logger", logger);
-    jbpmSession.startProcess("com.aimia.endeavour.loyalty.member", jbpmVariables); //todo: does dispose need to be called?
-  }
-  
 }

@@ -1,7 +1,10 @@
 package com.aimia.endeavour.member;
 
 import java.util.List;
-import com.aimia.endeavour.validation.*;
+import java.util.Map;
+import java.util.HashMap;
+
+import com.aimia.endeavour.bpm.MemberBpmService;
 import com.aimia.endeavour.member.MemberDTO;
 
 import javax.ws.rs.Consumes;
@@ -15,7 +18,6 @@ import org.jboss.resteasy.annotations.Form;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aimia.endeavour.validation.*;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.runtime.StatelessKnowledgeSession;
 
@@ -26,6 +28,7 @@ import org.drools.runtime.StatelessKnowledgeSession;
 public class MemberREST{
 	final Logger logger = LoggerFactory.getLogger(MemberREST.class);
   	private MemberService memberService;
+  	private MemberBpmService memberBpmService;
 
   	@GET
   	public List<MemberDTO> getMembers()
@@ -44,8 +47,15 @@ public class MemberREST{
 	@Path("/member/{id}")
 	@Consumes("text/plain")
 	public void createMember(@PathParam("id") String id, String body){
-		MemberDTO prospect = new MemberDTO();//Use Member as a DTO in effect, for test purposes.
+		Map<String, Object> jbpmVariables = new HashMap<String, Object>();
+
+		MemberDTO prospect = new MemberDTO();
 		prospect.setName(body);
+    	jbpmVariables.put("memberDTO", prospect);  
+    	  
+		memberBpmService.startBusinessProcess("com.aimia.endeavour.loyalty.member.create", jbpmVariables);
+		// Push the following into a BPM task.
+		
 		if (memberService.create(prospect))
 			logger.info("Created member:" + id + " name: " + body);
 		else
@@ -53,4 +63,5 @@ public class MemberREST{
 	}
 
 	public void setMemberService(MemberService memberService){this.memberService = memberService;}
+	public void setMemberBpmService(MemberBpmService bpmService){this.memberBpmService = bpmService;}
 }

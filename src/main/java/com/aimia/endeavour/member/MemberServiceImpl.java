@@ -49,7 +49,6 @@ public class MemberServiceImpl implements MemberService
 	// Find the member with 'name' as its key.
 	public MemberDTO find(String name)
 	{
-		memberValidationService.startBusinessProcess();
 		// todo: adding myBatis persistence
 		Member m = memberRepository.getMember("Kulio");
 		MemberDTO ret = mapper.map(m, MemberDTO.class);
