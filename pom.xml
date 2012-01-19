@@ -21,15 +21,20 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+        	<id>activiti</id>
+        	<name>Activiti Repository</name>
+        	<url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+    	</repository>
     </repositories>
     
 	<!-- Component version numbers. Please do not include version numbers in the dependency section - ADD THEM HERE. It saves a lot of grief when upgrading. Please keep in alphabetical order. -->
 	<properties>
+		<activiti.version>5.8</activiti.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<commons-lang.version>2.3</commons-lang.version>
 		<dozer.version>5.3.2</dozer.version>
 		<drools.version>5.3.0.Final</drools.version>
-		<jbpm.version>5.2.0.Final</jbpm.version>
 		<mybatis.version>3.0.6</mybatis.version>
 		<mybatis-spring.version>1.0.2</mybatis-spring.version>
 		<mysql-connector.version>5.1.14</mysql-connector.version>
@@ -39,6 +44,18 @@
 	
 	<!-- Dependices for this project. Please keep in alphabetical order - makes life a lot easier. -->
   <dependencies>
+  		<!-- Activiti BPM Engine. -->
+  		<dependency>
+  			<groupId>org.activiti</groupId>
+  			<artifactId>activiti-engine</artifactId>
+  			<version>${activiti.version}</version>
+  		</dependency>
+  		<!-- Activiti Spring integration beans -->
+  		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
   		<dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
@@ -56,7 +73,8 @@
 		    <artifactId>dozer</artifactId>
 		    <version>${dozer.version}</version>
 		</dependency>
-  	    <!--  Drools goes here. -->
+		<!-- Drools dependencies -->
+  	    <!--  Drools Expert goes here. -->
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
@@ -69,6 +87,7 @@
             <version>${drools.version}</version>
             <type>jar</type>
         </dependency>
+        <!-- Drools Spring integration -->
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-spring</artifactId>
@@ -107,12 +126,7 @@
             </exclusions>
         </dependency>
         <!-- END DROOLS -->
-    <!-- JBPM -->
-    <dependency>
-    	<groupId>org.jbpm</groupId>
-    	<artifactId>jbpm-bpmn2</artifactId>
-    	<version>${jbpm.version}</version>
-    </dependency>
+        
   	<!-- JUnit (I prefer TestNG) -->
     <dependency>
       <groupId>junit</groupId>
@@ -126,24 +140,40 @@
     	<artifactId>joda-time</artifactId>
     	<version>2.0</version>
 	</dependency>
-	<!-- mybatis persistence framework -->
+	<!-- MyBatis persistence framework -->
 	<dependency>
     	<groupId>org.mybatis</groupId>
     	<artifactId>mybatis</artifactId>
     	<version>${mybatis.version}</version>
-  </dependency>
-  <!-- mybatis spring integration -->
-  <dependency>
-  	<groupId>org.mybatis</groupId>
-  	<artifactId>mybatis-spring</artifactId>
-  	<version>${mybatis-spring.version}</version>
-  </dependency>
-  <!-- mysql-connector -->
-  <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>${mysql-connector.version}</version>
-  </dependency>
+	</dependency>
+	<!-- MyBatis spring integration -->
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-spring</artifactId>
+		<version>${mybatis-spring.version}</version>
+	</dependency>
+	<!-- MySQL-connector -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql-connector.version}</version>
+	</dependency>
+
+	<!-- RESTEasy goes here. -->
+    <!-- core library -->
+    <dependency>
+		<groupId>org.jboss.resteasy</groupId>
+		<artifactId>resteasy-jaxrs</artifactId>
+		<version>${resteasy.version}</version>
+	</dependency>
+	<!-- Library for Spring integration. -->
+	<dependency>
+	    <groupId>org.jboss.resteasy</groupId>
+	    <artifactId>resteasy-spring</artifactId>
+	    <version>${resteasy.version}</version>
+	</dependency>
+	<!-- END RESTEAsy -->
+
     <!-- slf4j and log4j should go here -->
     <dependency>
 	    <groupId>org.slf4j</groupId>
@@ -301,22 +331,8 @@
 	  <scope>test</scope>
 	</dependency>
      <!-- END Spring -->
-     
-     <!-- RESTEasy goes here. -->
-     <!-- core library -->
-     <dependency>
-	<groupId>org.jboss.resteasy</groupId>
-	<artifactId>resteasy-jaxrs</artifactId>
-	<version>${resteasy.version}</version>
-     </dependency>
-     <!-- Library for Spring integration. -->
-     <dependency>
-	    <groupId>org.jboss.resteasy</groupId>
-	    <artifactId>resteasy-spring</artifactId>
-	    <version>${resteasy.version}</version>
-    </dependency>
-     
   </dependencies>
+
   <build>
     <finalName>endeavour_member_service</finalName>
     	<pluginManagement>

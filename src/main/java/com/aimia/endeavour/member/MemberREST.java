@@ -53,7 +53,7 @@ public class MemberREST{
 		prospect.setName(body);
     	jbpmVariables.put("memberDTO", prospect);  
     	  
-		memberBpmService.startBusinessProcess("com.aimia.endeavour.loyalty.member.create", jbpmVariables);
+		memberBpmService.startBusinessProcess("member", jbpmVariables);
 		// Push the following into a BPM task.
 		
 		if (memberService.create(prospect))

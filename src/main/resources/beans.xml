@@ -4,10 +4,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:drools="http://drools.org/schema/drools-spring"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://drools.org/schema/drools-spring http://drools.org/schema/drools-spring.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+       <!-- Turn on autowiring of annotated bean properties -->
+       <context:annotation-config />
 
     <bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
         <property name="mappingFiles">
@@ -23,7 +27,6 @@
     <drools:kbase id="kbase" node="node1">
         <drools:resources>
             <drools:resource  type="DRL" source="classpath:rules/memberRules.drl"/>
-            <drools:resource type="BPMN2" source="classpath:bpm/memberFlows.bpmn2"/>
         </drools:resources>
         <drools:configuration>
             <drools:mbeans enabled="true" />
@@ -35,12 +38,44 @@
             <drools:resource type="CHANGE_SET" source="classpath:rules/changeSet.xml" />            
         </drools:resources>-->
     </drools:kagent>
-    <drools:ksession id="jbpmSession" type="stateful" kbase="kbase" />
 
-    <!-- BPM services provided by JBPM. -->
-    <bean id="memberBpmService1" class="com.aimia.endeavour.bpm.MemberBpmServiceImpl">
-        <property name="jbpmSession" ref="jbpmSession"/>
+    <!-- BPM services -->
+    <bean id="memberBpmService1" class="com.aimia.endeavour.bpm.MemberBpmServiceImpl" />
+
+    <!-- Activiti Configuration -->
+    <bean id="activitiDataSource" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+        <property name="targetDataSource">
+            <bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+                <property name="driverClass" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/phoenix" />
+                <property name="username" value="root" />
+                <property name="password" value="password" />
+            </bean>
+        </property>
     </bean>
+
+    <bean id="activitiTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="activitiDataSource" />
+    </bean>
+    
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="databaseType" value="mysql" />
+        <property name="dataSource" ref="activitiDataSource" />
+ <!--       <property name="transactionManager" ref="activitiTransactionManager" /> -->
+        <property name="databaseSchemaUpdate" value="true" />
+        <property name="jobExecutorActivate" value="false" />
+        <property name="deploymentResources" value="classpath*:bpm/activitiMemberFlows.bpmn20.xml" />
+    </bean>
+
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+
+    <!-- runtimeService is injected into beans that start/stop processes. -->
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+    <!-- taskService creates and queries uesr tasks -->
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+    <!-- END: Activiti Configuration -->
 
     <bean id="reportFactory1" class="com.aimia.endeavour.validation.DefaultReportFactory">
     </bean>
@@ -57,49 +92,6 @@
       <property name="beanMapper" ref="dozerMapper" />
     </bean>
 
-    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" primary="true">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/phoenix" />
-
-        <!--
-        <property name="driverClassName" value="net.sf.log4jdbc.DriverSpy" />
-        <property name="url" value="jdbc:log4jdbc:mysql://devendeavour4.c8qvefnksgs7.us-east-1.rds.amazonaws.com:3306/ENDEAVOUR" />
-        -->
-
-        <property name="user" value="root" />
-        <property name="password" value="password" />
-        <property name="initialPoolSize">
-            <value>1</value>
-        </property>
-        <property name="minPoolSize">
-            <value>1</value>
-        </property>
-        <property name="maxPoolSize">
-            <value>200</value>
-        </property>
-        <property name="maxIdleTimeExcessConnections">
-            <value>360</value>
-        </property>
-        <property name="idleConnectionTestPeriod">
-            <value>500</value>
-        </property>
-        <property name="maxStatementsPerConnection">
-            <!--0 means: statement caching is turned off.-->
-            <value>100</value>
-        </property>
-    </bean>
-
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-      <property name="dataSource" ref="myDataSource" />
-      <property name="mapperLocations" value="classpath*:com/aimia/endeavour/member/repository/**/*.xml" />
-    </bean>
-
-    <bean id="memberMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-      <property name="mapperInterface" value="com.aimia.endeavour.member.repository.MemberMapper" />
-      <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
-
     <bean id="memberRepository" class="com.aimia.endeavour.member.repository.MemberRepositoryImpl">
-      <property name="memberMapper" ref="memberMapper" />
     </bean>
 </beans>

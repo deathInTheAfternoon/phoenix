@@ -1,27 +1,33 @@
 package com.aimia.endeavour.bpm;
 
 import java.util.Map;
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.drools.runtime.StatefulKnowledgeSession;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 
-public class MemberBpmServiceImpl implements  MemberBpmService {
+public class MemberBpmServiceImpl implements MemberBpmService {
   
   final Logger logger = LoggerFactory.getLogger(MemberBpmServiceImpl.class);
-  private StatefulKnowledgeSession jbpmSession;
-    
-  public void setJbpmSession(StatefulKnowledgeSession jbpmSession)
+  @Autowired
+  private RuntimeService runtimeService;
+  @Autowired
+  private TaskService taskService;
+     
+  public void startBusinessProcess(String processId, Map<String, Object> bpmEngineVariables)
   {
-    this.jbpmSession = jbpmSession;
-  }
+    runtimeService.startProcessInstanceByKey(processId, bpmEngineVariables);
 
-  public void startBusinessProcess(String processId, Map<String, Object> jbpmVariables)
-  {
-    logger.debug("Calling BPM Process " +  processId);
-    jbpmVariables.put("logger", logger);
-    jbpmSession.startProcess(processId, jbpmVariables); //todo: does dispose need to be called?
+    Task task = taskService.createTaskQuery().singleResult();
+    logger.debug("Completed Order" + task.getName());
+    taskService.complete(task.getId());
+    logger.debug("Process instance count = " + runtimeService.createProcessInstanceQuery().count());
+
   }
   
 }
