@@ -16,18 +16,10 @@ public class MemberBpmServiceImpl implements MemberBpmService {
   final Logger logger = LoggerFactory.getLogger(MemberBpmServiceImpl.class);
   @Autowired
   private RuntimeService runtimeService;
-  @Autowired
-  private TaskService taskService;
      
   public void startBusinessProcess(String processId, Map<String, Object> bpmEngineVariables)
   {
     runtimeService.startProcessInstanceByKey(processId, bpmEngineVariables);
-
-    Task task = taskService.createTaskQuery().singleResult();
-    logger.debug("Completed Order" + task.getName());
-    taskService.complete(task.getId());
-    logger.debug("Process instance count = " + runtimeService.createProcessInstanceQuery().count());
-
   }
   
 }
