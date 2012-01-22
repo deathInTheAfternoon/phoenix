@@ -66,11 +66,7 @@
   </bean>
   
     <!-- runtimeService is injected into beans that start/stop processes. -->
-    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
     <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
-    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
-    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
-    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
 
     <bean id="reportFactory1" class="com.aimia.endeavour.validation.DefaultReportFactory">
     </bean>

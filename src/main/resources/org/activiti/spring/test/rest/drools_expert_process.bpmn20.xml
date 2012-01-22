@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+  xmlns:activiti="http://activiti.org/bpmn" 
+  targetNamespace="Examples">
+
+  <process id="drools_expert_process">
+
+    <startEvent id="start" />
+    <sequenceFlow sourceRef="start" targetRef="ruleTask" />
+
+    <businessRuleTask id="ruleTask" activiti:ruleVariablesInput="${applicant}" activiti:resultVariable="rulesOutput" />
+    <sequenceFlow sourceRef="ruleTask" targetRef="print" />
+
+    <serviceTask id="print" activiti:expression="#{logger.debug('XYZXYZ within drools_expert_process flow.')}" />
+    <sequenceFlow sourceRef="print" targetRef="receiveTask" />
+
+    <receiveTask id="receiveTask" />
+    <sequenceFlow sourceRef="receiveTask" targetRef="theEnd" />
+
+    <endEvent id="theEnd" />
+
+  </process>
+
+</definitions>
