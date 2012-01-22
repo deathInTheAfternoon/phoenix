@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package org.activiti.spring.test.drools_expert;
+package org.activiti.spring.test.rest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,11 +42,11 @@ import org.junit.Ignore;
  * @author Naveen Thakur
  */
  @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org/activiti/spring/test/drools_expert/beans.xml")
-public class DroolsExpertTest {
+@ContextConfiguration("classpath:org/activiti/spring/test/rest/beans.xml")
+public class RestTest {
   /*@Autowired
   private MemberBpmService bpm;*/
-  final Logger logger = LoggerFactory.getLogger(DroolsExpertTest.class);
+  final Logger logger = LoggerFactory.getLogger(RestTest.class);
 
   @Autowired
   private ProcessEngine processEngine;
@@ -70,11 +70,10 @@ public class DroolsExpertTest {
   @Test
   /*@Deployment(resources = {"org/activiti/spring/test/drools_expert/drools_expert_process.bpmn20.xml",
                             "org/activiti/spring/test/drools_expert/creditCheck.drl"})*/
-  public void testSimpleProcess() {
+  public void testRestProcess() {
     Map<String, Object> vars = new HashMap<String, Object>();
     vars.put("logger", logger);
-    vars.put("applicant", new LoanApplicant(50));
-    runtimeService.startProcessInstanceByKey("drools_expert_process", vars);
+    runtimeService.startProcessInstanceByKey("rest_process", vars);
     //bpm.startBusinessProcess("simpleProcess", null);
    
   }

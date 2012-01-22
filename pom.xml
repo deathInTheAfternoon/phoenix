@@ -76,7 +76,21 @@
       <version>1.2</version>
       <scope>test</scope>
     </dependency>
-               
+    <!-- for testing rest invocation -->
+    <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.1.2</version>
+    <scope>compile</scope>
+  </dependency>
+  <!-- Brings in EntityUtils class used in the test rest invocation class. -->
+  <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpcore</artifactId>
+    <version>4.1.4</version>
+    <scope>compile</scope>
+  </dependency>
+
   		<!-- Activiti BPM Engine. -->
   		<dependency>
   			<groupId>org.activiti</groupId>

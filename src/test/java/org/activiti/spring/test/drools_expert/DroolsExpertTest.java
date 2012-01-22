@@ -41,6 +41,7 @@ import org.junit.Ignore;
 /**
  * @author Naveen Thakur
  */
+ @Ignore
  @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:org/activiti/spring/test/drools_expert/beans.xml")
 public class DroolsExpertTest {

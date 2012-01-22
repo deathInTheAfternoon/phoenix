@@ -35,7 +35,7 @@
         <bean class="org.activiti.engine.impl.rules.RulesDeployer" />
       </list>
     </property>
-    <property name="deploymentResources" value="classpath*:/org/activiti/spring/test/drools_expert/*" />
+    <property name="deploymentResources" value="classpath*:/org/activiti/spring/test/rest/*" />
   </bean>
   
   <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
