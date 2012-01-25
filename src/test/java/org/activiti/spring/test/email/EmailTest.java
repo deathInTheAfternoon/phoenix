@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package org.activiti.spring.test.rest;
+package org.activiti.spring.test.email;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,19 +35,24 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Ignore;
+
+import org.subethamail.wiser.Wiser;
+import org.subethamail.wiser.WiserMessage;
+import javax.mail.internet.MimeMessage;
 
 /**
  * @author Naveen Thakur
  */
  @Ignore
  @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org/activiti/spring/test/rest/beans.xml")
-public class RestTest {
+@ContextConfiguration("classpath:org/activiti/spring/test/email/beans.xml")
+public class EmailTest {
   /*@Autowired
   private MemberBpmService bpm;*/
-  final Logger logger = LoggerFactory.getLogger(RestTest.class);
+  final Logger logger = LoggerFactory.getLogger(EmailTest.class);
 
   @Autowired
   private ProcessEngine processEngine;
@@ -72,11 +77,25 @@ public class RestTest {
   /*@Deployment(resources = {"org/activiti/spring/test/drools_expert/drools_expert_process.bpmn20.xml",
                             "org/activiti/spring/test/drools_expert/creditCheck.drl"})*/
   public void testRestProcess() {
+
+    // Initialise the embedded email engine
+    Wiser wiser = new Wiser();
+    wiser.setPort(1025);
+    wiser.start();
+
     Map<String, Object> vars = new HashMap<String, Object>();
     vars.put("logger", logger);
-    runtimeService.startProcessInstanceByKey("rest_process", vars);
+    runtimeService.startProcessInstanceByKey("email_process", vars);
     //bpm.startBusinessProcess("simpleProcess", null);
-   
+   try
+   {
+     List<WiserMessage> messages = wiser.getMessages();
+     assertEquals(1, messages.size());
+     WiserMessage message = messages.get(0);
+     MimeMessage mimeMessage = message.getMimeMessage();
+     assertEquals("Hello Naveen", mimeMessage.getHeader("Subject", null));
+     wiser.stop();
+  }catch(javax.mail.MessagingException e){;}
   }
 
 }

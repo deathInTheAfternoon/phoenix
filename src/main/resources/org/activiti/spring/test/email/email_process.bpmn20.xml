@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+  xmlns:activiti="http://activiti.org/bpmn" 
+  targetNamespace="Pheonix">
+
+   <process id="email_process" >
+    <startEvent id="theStart" />
+    <sequenceFlow sourceRef="theStart" targetRef="sendMail" />
+    <serviceTask id="sendMail" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to" stringValue="n.thakur@localhost" />
+        <activiti:field name="subject" expression="Hello Naveen" />
+        <activiti:field name="html">
+          <activiti:expression>
+            <![CDATA[
+              <html>
+                <body>
+                  Hello Naveen,<br/><br/>
+                  Phoenix rises from the ashes?<br/><br/>
+                  What will it cost?<br/><br/>
+                  Kind regards,<br/>
+                  Clueless Executive.
+                </body>
+              </html>
+            ]]>
+          </activiti:expression>
+        </activiti:field>       
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow sourceRef="sendMail" targetRef="theEnd" />
+    <endEvent id="theEnd" />
+  </process>
+
+</definitions>
