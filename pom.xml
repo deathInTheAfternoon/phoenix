@@ -1,15 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.aimia.endeavour</groupId>
-  <artifactId>endeavour_member_service</artifactId>
+  <groupId>org.thakurn.phoenix</groupId>
+  <artifactId>phoenix_experiments</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>endeavour_member_service Webapp</name>
+  <name>Phoenix</name>
   <url>http://maven.apache.org</url>
   
   <!-- External repositories to find dependencies not kept on maven central repo e.g. JBoss. -->
   <repositories>
+  		<!-- Activiti repo -->
+  		<repository>
+        	<id>activiti</id>
+        	<name>Activiti Repository</name>
+        	<url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
+    	</repository>
+    	<!-- Required for Activiti integration with Mule -->
+    	<repository>
+			<id>muleforge-repo</id>
+			<name>MuleForge Repository</name>
+			<url>http://repository.muleforge.org/release</url>
+			<layout>default</layout>
+		</repository>
+		<!-- JBoss and Drools repo -->
         <repository>
             <id>jboss</id>
             <name>jboss</name>
@@ -21,57 +35,35 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-        	<id>activiti</id>
-        	<name>Activiti Repository</name>
-        	<url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
-    	</repository>
-    	<!-- Required for mule-module-activiti -->
-    	<repository>
-			<id>muleforge-repo</id>
-			<name>MuleForge Repository</name>
-			<url>http://repository.muleforge.org/release</url>
-			<layout>default</layout>
-		</repository>
     </repositories>
     
 	<!-- Component version numbers. Please do not include version numbers in the dependency section - ADD THEM HERE. It saves a lot of grief when upgrading. Please keep in alphabetical order. -->
 	<properties>
 		<activiti.version>5.8</activiti.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
+		<cglib.ver>2.2.2</cglib.ver>
 		<commons-lang.version>2.3</commons-lang.version>
 		<dozer.version>5.3.2</dozer.version>
 		<drools.version>5.3.0.Final</drools.version>
+		<hypersonic.ver>1.2.132</hypersonic.ver>
+		<joda.ver>2.0</joda.ver>
+		<junit.ver>4.8.1</junit.ver>
 		<mybatis.version>3.0.6</mybatis.version>
 		<mybatis-spring.version>1.0.2</mybatis-spring.version>
 		<mysql-connector.version>5.1.14</mysql-connector.version>
 		<mule.version>3.2.1</mule.version>
-	    <org.springframework.version>3.0.5.RELEASE</org.springframework.version>
+		<mule-activiti.ver>3.2.0</mule-activiti.ver>
+		<openjpa.ver>2.1.1</openjpa.ver>
 	    <resteasy.version>2.2.1.GA</resteasy.version>
+	    <sl4j-api.ver>1.6.1</sl4j-api.ver>
+	    <sl4j-log4j12.ver>1.6.1</sl4j-log4j12.ver>
+	    <springframework.ver>3.0.5.RELEASE</springframework.ver>
 	</properties>
 	
 	<!-- Dependices for this project. Please keep in alphabetical order - makes life a lot easier. -->
-  <dependencies>
-	<!-- Testing -->
-   	<dependency>
-	<groupId>cglib</groupId>
-	<artifactId>cglib</artifactId>
-	<version>2.2.2</version>
-</dependency>
-            
-    <dependency>
-    	<groupId>org.apache.openjpa</groupId>
-		<artifactId>openjpa</artifactId>
-        <!-- set the version to be the same as the level in your runtime -->
-        <version>2.1.1</version>
-    </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>1.2.132</version>
-      <scope>test</scope>
-    </dependency>
+  <dependencies>
+
     <!-- dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
@@ -98,6 +90,17 @@
     <version>4.1.4</version>
     <scope>compile</scope>
   </dependency>
+	<!-- Activiti Camel Integration -->
+	<dependency>
+		<groupId>org.activiti</groupId>
+		<artifactId>activiti-camel</artifactId>
+		<version>5.6</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-spring</artifactId>
+		<version>2.5.0</version>
+	</dependency>
   <!-- Using the Activiti Mule integration -->
   <dependency>
 			<groupId>org.activiti</groupId>
@@ -148,7 +151,7 @@
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-activiti</artifactId>
-			<version>3.2.0</version>
+			<version>${mule-activiti.ver}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.mule</groupId>
@@ -181,6 +184,7 @@
 			</exclusions>
 		</dependency>
 		<!-- END OF ACTIVITI MULE -->
+		
   		<!-- Activiti BPM Engine. -->
   		<dependency>
   			<groupId>org.activiti</groupId>
@@ -193,11 +197,17 @@
 			<artifactId>activiti-spring</artifactId>
 			<version>${activiti.version}</version>
 		</dependency>
+		
   		<dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
             <version>${c3p0.version}</version>
         </dependency>
+        <dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.ver}</version>
+		</dependency>
   		<!-- Commons-lang (Apache). This is used by the Drools Validation example which was copied, should we replace? -->
   		<dependency>
     		<groupId>commons-lang</groupId>
@@ -263,19 +273,25 @@
             </exclusions>
         </dependency>
         <!-- END DROOLS -->
-        
+
+    <!-- Hypersonic is used by Activiti tests that I've copied over. -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${hypersonic.ver}</version>
+      <scope>test</scope>
+    </dependency>    
   	<!-- JUnit (I prefer TestNG) -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.1</version>
-     
+      <version>${junit.ver}</version>
     </dependency>
     <!-- JODA Date/Time library. -->
     <dependency>
     	<groupId>joda-time</groupId>
     	<artifactId>joda-time</artifactId>
-    	<version>2.0</version>
+    	<version>${joda.ver}</version>
 	</dependency>
 	<!-- MyBatis persistence framework -->
 	<dependency>
@@ -295,7 +311,13 @@
 		<artifactId>mysql-connector-java</artifactId>
 		<version>${mysql-connector.version}</version>
 	</dependency>
-
+	<!-- OpenJPA is used by Activiti instead of Hibernate because of their concern over licenses. -->
+	<dependency>
+    	<groupId>org.apache.openjpa</groupId>
+		<artifactId>openjpa</artifactId>
+        <!-- set the version to be the same as the level in your runtime -->
+        <version>${openjpa.ver}</version>
+    </dependency>
 	<!-- RESTEasy goes here. -->
     <!-- core library -->
     <dependency>
@@ -310,19 +332,19 @@
 	    <version>${resteasy.version}</version>
 	</dependency>
 	<!-- END RESTEAsy -->
-
     <!-- slf4j and log4j should go here -->
     <dependency>
 	    <groupId>org.slf4j</groupId>
 	    <artifactId>slf4j-api</artifactId>
-	    <version>1.6.1</version>
+	    <version>${sl4j-api.ver}</version>
      </dependency>
      <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.1</version>
+            <version>${sl4j-log4j12.ver}</version>
      </dependency>
-     <!-- Spring dependencies go here. -->
+    
+    <!-- SPRING dependencies go here. -->
 	<!--
 	    Core utilities used by other modules.
 	    Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*)
@@ -330,7 +352,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-core</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -340,7 +362,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-expression</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -350,7 +372,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-beans</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -360,7 +382,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-aop</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -370,7 +392,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-context</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -380,7 +402,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-context-support</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -391,7 +413,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-tx</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -401,7 +423,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-jdbc</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -412,7 +434,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-orm</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -423,7 +445,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-oxm</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -434,7 +456,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-web</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -444,7 +466,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-webmvc</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -454,7 +476,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-webmvc-portlet</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	</dependency>
 	 
 	<!--
@@ -464,7 +486,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-test</artifactId>
-	  <version>${org.springframework.version}</version>
+	  <version>${springframework.ver}</version>
 	  <scope>test</scope>
 	</dependency>
      <!-- END Spring -->

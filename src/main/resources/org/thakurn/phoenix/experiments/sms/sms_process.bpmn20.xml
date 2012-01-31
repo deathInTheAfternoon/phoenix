@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+  xmlns:activiti="http://activiti.org/bpmn" 
+  targetNamespace="Examples">
+
+  <process id="sms_process">
+
+    <startEvent id="start" />
+    <sequenceFlow sourceRef="start" targetRef="smsTask" />
+
+    <serviceTask id="smsTask" activiti:class="org.thakurn.phoenix.experiments.sms.JavaDelegateSmsService" />
+    <sequenceFlow sourceRef="smsTask" targetRef="theEnd" />
+
+    <endEvent id="theEnd" />
+
+  </process>
+
+</definitions>
