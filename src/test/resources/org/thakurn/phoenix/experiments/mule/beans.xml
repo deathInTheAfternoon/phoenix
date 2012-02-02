@@ -30,7 +30,7 @@
     <property name="transactionManager" ref="transactionManager" />
     <property name="databaseSchemaUpdate" value="true" />
     <property name="jobExecutorActivate" value="false" />
-    <property name="deploymentResources" value="classpath*:/org.thakurn.phoenix.experiments/mule/*" />
+    <property name="deploymentResources" value="classpath*:/org/thakurn/phoenix/experiments/mule/*" />
     <property name="beans">
       <map>
           <entry key="muleContext" value-ref="_muleContext" />

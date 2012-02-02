@@ -35,7 +35,7 @@
         <bean class="org.activiti.engine.impl.rules.RulesDeployer" />
       </list>
     </property>
-    <property name="deploymentResources" value="classpath*:/org.thakurn.phoenix.experiments/email/*" />
+    <property name="deploymentResources" value="classpath*:/org/thakurn/phoenix/experiments/email/*" />
     <!-- This is the test email port used by SubEthaSMTP during testing -->
     <property name="mailServerPort" value="1025"/>
   </bean>
