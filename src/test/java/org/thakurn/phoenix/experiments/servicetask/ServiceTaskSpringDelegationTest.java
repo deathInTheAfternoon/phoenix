@@ -23,7 +23,7 @@ import org.junit.Ignore;
  * @author Joram Barrez
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/servicetask/servicetaskSpringTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/servicetask/servicetaskSpringTest-context.xml")
 public class ServiceTaskSpringDelegationTest extends SpringActivitiTestCase {
   
   @Deployment

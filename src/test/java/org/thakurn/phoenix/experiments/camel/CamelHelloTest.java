@@ -21,7 +21,7 @@ import org.junit.Ignore;
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/camel/application-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/camel/application-context.xml")
 public class CamelHelloTest {
 
 	@Autowired

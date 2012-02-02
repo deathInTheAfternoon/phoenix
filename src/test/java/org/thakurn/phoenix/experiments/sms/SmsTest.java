@@ -43,7 +43,7 @@ import org.junit.Ignore;
 */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/sms/beans.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/sms/beans.xml")
 public class SmsTest {
   /*@Autowired
   private MemberBpmService bpm;*/

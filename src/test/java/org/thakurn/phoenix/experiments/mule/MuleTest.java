@@ -58,7 +58,7 @@ import static org.junit.Assert.assertFalse;
 
  //@RunWith(SpringJUnit4ClassRunner.class)
  // Not required as we're loading via Mule libraries
- //@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/mule/mule-configuration.xml")
+ //@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/mule/mule-configuration.xml")
  @Ignore
 public class MuleTest {
   /*@Autowired

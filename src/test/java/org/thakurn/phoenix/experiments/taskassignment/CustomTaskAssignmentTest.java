@@ -22,7 +22,7 @@ import org.junit.Ignore;
  * @author Joram Barrez
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/taskassignment/taskassignment-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/taskassignment/taskassignment-context.xml")
 public class CustomTaskAssignmentTest extends SpringActivitiTestCase {
   
   @Deployment

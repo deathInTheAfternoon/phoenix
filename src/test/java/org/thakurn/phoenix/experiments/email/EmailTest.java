@@ -48,7 +48,7 @@ import javax.mail.internet.MimeMessage;
  */
  @Ignore
  @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/email/beans.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/email/beans.xml")
 public class EmailTest {
   /*@Autowired
   private MemberBpmService bpm;*/

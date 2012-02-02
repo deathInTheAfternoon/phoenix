@@ -43,7 +43,7 @@ import org.junit.Ignore;
  */
  @Ignore
  @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/drools_expert/beans.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/drools_expert/beans.xml")
 public class DroolsExpertTest {
   /*@Autowired
   private MemberBpmService bpm;*/

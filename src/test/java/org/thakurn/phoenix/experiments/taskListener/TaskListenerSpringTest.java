@@ -24,7 +24,7 @@ import org.junit.Ignore;
  * @author Joram Barrez
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/taskListener/TaskListenerDelegateExpressionTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/taskListener/TaskListenerDelegateExpressionTest-context.xml")
 public class TaskListenerSpringTest extends SpringActivitiTestCase {
   
   @Deployment

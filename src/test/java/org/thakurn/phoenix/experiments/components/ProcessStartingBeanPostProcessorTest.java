@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
  @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/components/ProcessStartingBeanPostProcessorTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/components/ProcessStartingBeanPostProcessorTest-context.xml")
 public class ProcessStartingBeanPostProcessorTest {
 
 	private Logger log = Logger.getLogger(getClass().getName());

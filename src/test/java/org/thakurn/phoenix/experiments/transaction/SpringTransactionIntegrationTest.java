@@ -27,7 +27,7 @@ import org.junit.Ignore;
  * @author Tom Baeyens
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/transaction/SpringTransactionIntegrationTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/transaction/SpringTransactionIntegrationTest-context.xml")
 public class SpringTransactionIntegrationTest extends SpringActivitiTestCase {
   
   @Autowired

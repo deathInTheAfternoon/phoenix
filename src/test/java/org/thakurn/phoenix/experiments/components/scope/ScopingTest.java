@@ -31,7 +31,7 @@ import org.junit.Ignore;
  */
  @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/components/ScopingTests-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/components/ScopingTests-context.xml")
 public class ScopingTest {
 
 	@Autowired

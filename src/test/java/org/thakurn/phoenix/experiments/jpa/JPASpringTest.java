@@ -29,7 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Frederik Heremans
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/jpa/JPASpringTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/jpa/JPASpringTest-context.xml")
 public class JPASpringTest extends SpringActivitiTestCase {
   
   @Deployment(resources = {"org.thakurn.phoenix.experiments/jpa/JPASpringTest.bpmn20.xml"})

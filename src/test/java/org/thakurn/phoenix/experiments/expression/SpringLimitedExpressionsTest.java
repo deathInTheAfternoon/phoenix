@@ -28,7 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Frederik Heremans
  */
  @Ignore
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/expression/expressionLimitedBeans-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/expression/expressionLimitedBeans-context.xml")
 public class SpringLimitedExpressionsTest extends SpringActivitiTestCase {
 
   @Deployment

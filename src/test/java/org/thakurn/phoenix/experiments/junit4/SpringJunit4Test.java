@@ -36,7 +36,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @Ignore
  @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:org.thakurn.phoenix.experiments/junit4/springTypicalUsageTest-context.xml")
+@ContextConfiguration("classpath:org/thakurn/phoenix/experiments/junit4/springTypicalUsageTest-context.xml")
 public class SpringJunit4Test {
   
   @Autowired
