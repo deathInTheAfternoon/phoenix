@@ -41,7 +41,7 @@ import org.junit.Ignore;
 /**
  * @author Naveen Thakur
  */
- @Ignore
+
  @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:org/thakurn/phoenix/experiments/rest/beans.xml")
 public class RestTest {
